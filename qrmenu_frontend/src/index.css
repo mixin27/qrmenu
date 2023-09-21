@@ -6,12 +6,16 @@ body {
   font-family: "Lato", "Helvetica Neue", sans-serif;
 }
 
-.btn-standard {
+.btn-primary {
   background-color: #ff3366;
+  border-color: #ff3366;
   color: white;
 }
 
-.btn-standard:hover {
-  background-color: #fc285d;
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:disabled {
+  background-color: #fc285d !important;
   color: white;
 }
