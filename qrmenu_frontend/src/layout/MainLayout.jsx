@@ -12,6 +12,10 @@ const MainLayout = ({ children }) => {
     navigate("/login");
   };
 
+  const onRegister = () => {
+    navigate("/register");
+  };
+
   const onSignOut = () => {
     logout();
   };
@@ -31,7 +35,14 @@ const MainLayout = ({ children }) => {
 
         <Nav className="flex-grow-1 justify-content-end">
           {!token ? (
-            <Nav.Link onClick={onSignIn}>Login</Nav.Link>
+            <>
+              <Nav.Link key={1} onClick={onSignIn}>
+                Login
+              </Nav.Link>
+              <Nav.Link key={2} onClick={onRegister}>
+                Register
+              </Nav.Link>
+            </>
           ) : (
             <Nav.Link onClick={onSignOut}>Logout</Nav.Link>
           )}

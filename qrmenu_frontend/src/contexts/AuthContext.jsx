@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { signIn as signInApi } from "../apis";
+import { signIn as signInApi, register as registerApi } from "../apis";
 
 const AuthContext = createContext();
 
@@ -33,12 +33,24 @@ export const AuthProvider = ({ children }) => {
     navigate("/login", { replace: true });
   };
 
+  const register = async (username, password) => {
+    setLoading(true);
+    const response = await registerApi(username, password);
+
+    if (response && response.id) {
+      // setToken(response.auth_token);
+      navigate("/login");
+    }
+    setLoading(false);
+  };
+
   const value = useMemo(
     () => ({
       token,
       loading,
       login,
       logout,
+      register,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [token, loading]
