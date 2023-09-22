@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 function request(path, { data = null, token = null, method = "GET" }) {
   return fetch(path, {
-    method: "POST",
+    method: method,
     headers: {
       Authorization: token ? `Token ${token}` : "",
       "Content-Type": "application/json",
@@ -62,4 +62,8 @@ export function register(username, password) {
     data: { username, password },
     method: "POST",
   });
+}
+
+export function fetchPlaces(token) {
+  return request("/api/api/places/", { token });
 }
