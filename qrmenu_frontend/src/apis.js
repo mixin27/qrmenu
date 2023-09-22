@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
+const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
 function request(path, { data = null, token = null, method = "GET" }) {
-  return fetch(path, {
+  return fetch(`/api${path}`, {
     method: method,
     headers: {
       Authorization: token ? `Token ${token}` : "",
@@ -51,19 +52,36 @@ function request(path, { data = null, token = null, method = "GET" }) {
 export { request };
 
 export function signIn(username, password) {
-  return request("/api/auth/token/login", {
+  return request("/auth/token/login", {
     data: { username, password },
     method: "POST",
   });
 }
 
 export function register(username, password) {
-  return request("/api/auth/users/", {
+  return request("/auth/users/", {
     data: { username, password },
     method: "POST",
   });
 }
 
 export function fetchPlaces(token) {
-  return request("/api/api/places/", { token });
+  return request("/api/places/", { token });
+}
+
+export function addPlace(data, token) {
+  return request("/api/places/", { data, token, method: "POST" });
+}
+
+export function uploadImage(image) {
+  const formData = new FormData();
+  formData.append("file", image);
+  formData.append("upload_preset", "qrmenu_photos");
+
+  return fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    method: "POST",
+    body: formData,
+  }).then((response) => {
+    return response.json();
+  });
 }
